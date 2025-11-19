@@ -1,0 +1,52 @@
+<html>
+    {% load static %}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Ticketing</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+        <link rel="stylesheet" href="{% static 'plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css' %}">
+        <link rel="stylesheet" href="{% static 'plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'plugins/jqvmap/jqvmap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+        <link rel="stylesheet" href="{% static 'plugins/overlayScrollbars/css/OverlayScrollbars.min.css' %}">
+        <link rel="stylesheet" href="{% static 'plugins/daterangepicker/daterangepicker.css' %}">
+        <link rel="stylesheet" href="{% static 'plugins/summernote/summernote-bs4.min.css' %}">
+    </head>
+    <body>
+        <section class="vh-100">
+            <div class="container-fluid h-custom">
+                <div class="row d-flex justify-content-center align-items-center h-100">
+                    <div class="col-md-9 col-lg-6 col-xl-5">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                             class="img-fluid" alt="Sample image">
+                    </div>
+                    <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                        <h1 class="mb-4">Please login</h1>
+                        <form method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div data-mdb-input-init class="form-outline mb-4">
+                                <input type="text" id="id_username" name="username" class="form-control form-control-lg"
+                                       placeholder="Enter username" />
+                                <label class="form-label" for="id_username">Username</label>
+                            </div>
+
+                            <div data-mdb-input-init class="form-outline mb-3">
+                                <input type="password" id="id_password" name="password" class="form-control form-control-lg"
+                                       placeholder="Enter password" />
+                                <label class="form-label" for="id_password">Password</label>
+                            </div>
+
+                            <div class="text-center text-lg-start mt-4 pt-2">
+                                <button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg"
+                                    style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
