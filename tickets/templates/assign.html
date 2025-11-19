@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Assign {{ ticket.title }} Ticket To</h3>
+            </div>
+
+            <form method="post" action="{% url 'tickets:assign_ticket' ticket.id %}">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>User</label>
+                        <select name="user_id" class="form-control {% if errors.user_id %}is-invalid{% endif %}">
+                            <option value="">Select User</option>
+                            {% for user in users %}
+                                <option value="{{ user.id }}" {% if form_data.user_id == user.id|stringformat:"s" %}selected{% endif %}>{{ user.username }} ({{ user.email }})</option>
+                            {% endfor %}
+                        </select>
+                        {% if errors.user_id %}
+                            <small class="text-danger">{{ errors.user_id }}</small>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Assign Ticket</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
