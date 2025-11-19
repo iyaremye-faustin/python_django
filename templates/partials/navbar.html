@@ -1,50 +1,73 @@
 <nav class="mt-2">
     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-users"></i>
-                <p>
-                    Users
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-            </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{% url 'accounts:user_list' %}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>List</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{% url 'accounts:new_user' %}" class="nav-link">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Add New</p>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
-              <p>
-                Settings
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{% url 'accounts:department_list' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Departments</p>
+        {% if request.user.is_superuser %}
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-users"></i>
+                    <p>
+                        Users
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
                 </a>
-              </li>
-              <li class="nav-item">
-                <a href="{% url 'accounts:role_list' %}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Roles</p>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{% url 'accounts:user_list' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>List</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'accounts:new_user' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Add New</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
+        {% if request.user.is_superuser %}
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-tree"></i>
+                    <p>
+                        Settings
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
                 </a>
-              </li>
-            </ul>
-        </li>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{% url 'accounts:department_list' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Departments</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'accounts:role_list' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Roles</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
+        {% if request.user.is_superuser %}
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-tree"></i>
+                    <p>
+                        Tickets
+                        <i class="fas fa-angle-left right"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{% url 'tickets:category_list' %}" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Categories</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        {% endif %}
     </ul>
 </nav>

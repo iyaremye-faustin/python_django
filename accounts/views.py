@@ -23,8 +23,8 @@ def create_user(request):
         first_name = request.POST.get("first_name", "").strip()
         last_name = request.POST.get("last_name", "").strip()
         password = request.POST.get("password", "")
-        department = request.POST.get("department", "")
-        role = request.POST.get("role", "")
+        department_id = request.POST.get("department", "")
+        role_id = request.POST.get("role", "")
         phone = request.POST.get("phone", "").strip()
         
         errors = {}
@@ -43,18 +43,33 @@ def create_user(request):
             errors["phone"] = "Phone number is required."
         if not password:
             errors["password"] = "Password is required."
-        if not department:
-            errors["department"] = "Department is required."
-        if not role:
-            errors["role"] = "Role is required."
         elif len(password) < 6:
             errors["password"] = "Password must be at least 6 characters."
+        if not department_id:
+            errors["department"] = "Department is required."
+        if not role_id:
+            errors["role"] = "Role is required."
 
         if User.objects.filter(username=username).exists():
             errors["username"] = "This username is already taken."
 
         if User.objects.filter(email=email).exists():
             errors["email"] = "This email is already registered."
+
+        department_obj = None
+        role_obj = None
+
+        if department_id:
+            try:
+                department_obj = Department.objects.get(pk=department_id)
+            except Department.DoesNotExist:
+                errors["department"] = "Selected department does not exist."
+
+        if role_id:
+            try:
+                role_obj = Role.objects.get(pk=role_id)
+            except Role.DoesNotExist:
+                errors["role"] = "Selected role does not exist."
 
         if errors:
             return render(request, "create_user.html", {
@@ -63,7 +78,6 @@ def create_user(request):
                 "roles": Role.objects.all(),
                 "departments": Department.objects.all()
             })
-            
         user = User.objects.create(
             username=username,
             email=email,
@@ -71,14 +85,20 @@ def create_user(request):
             last_name=last_name,
         )
         user.set_password(password)
-        user.save()
+        user.save() 
+
+        profile = user.profile
+        profile.phone = phone
+        profile.department = department_obj
+        profile.role = role_obj
+        profile.save()
 
         messages.success(request, "User created successfully!")
         return redirect("accounts:user_list")
+
     roles = Role.objects.all()
     departments = Department.objects.all()
     return render(request, "create_user.html", {"roles": roles, "departments": departments})
-
 @login_required
 @user_passes_test(is_super_admin)
 def department_list(request):

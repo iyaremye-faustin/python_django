@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Create Ticket{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">Create New Ticket</h3>
+            </div>
+
+            <form method="post" action="{% url 'tickets:create_ticket' %}">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" name="title"
+                               class="form-control {% if errors.title %}is-invalid{% endif %}"
+                               value="{{ form_data.title }}">
+                        {% if errors.title %}
+                            <small class="text-danger">{{ errors.title }}</small>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="category"
+                               class="form-control {% if errors.name %}is-invalid{% endif %}">
+                            <option value="">Select Category</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}"
+                                    {% if form_data.category == category.id %}selected{% endif %}>
+                                    {{ category.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        {% if errors.name %}
+                            <small class="text-danger">{{ errors.name }}</small>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description"
+                                  class="form-control {% if errors.description %}is-invalid{% endif %}">{{ form_data.description }}</textarea>
+                        {% if errors.description %}
+                            <small class="text-danger">{{ errors.description }}</small>
+                        {% endif %}
+                </div>
+
+                <div class="card">
+                    <button type="submit" class="btn btn-primary">Create Ticket</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
