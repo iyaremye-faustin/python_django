@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.python-version
+
+# Django stuff
+*.log
+*.pot
+*.pyc
+*.pyo
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+static/
+node_modules/
+build/
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+*.env
+.env.*
+.env.local
+.env.production
+.secret
+secrets.json
+
+# Migrations (OPTIONAL)
+# Uncomment if you don't want old migrations in Git
+# **/migrations/*.py
+# !**/migrations/__init__.py
+
+# Coverage / testing
+htmlcov/
+.coverage
+.tox/
+pytestcache/
+.pytest_cache/
+coverage.xml
+
+# Cache
+.cache/
