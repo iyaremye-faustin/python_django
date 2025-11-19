@@ -33,14 +33,26 @@
                     <thead>
                         <tr>
                             <th>Ticket Title</th>
+                            <th>Department</th>
+                            <th>Status</th>
                             <th>Date Created</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for ticket in tickets %}
                         <tr>
                             <td>{{ ticket.title }}</td>
+                            <td>{{ ticket.department.name }}</td>
+                            <td>{{ ticket.status }}</td>
                             <td>{{ ticket.created_at }}</td>
+                            <td>
+                                {% if request.user.is_superuser or request.user.profile.role.name == 'Manager' %}
+                                    {% if ticket.status == 'open' %}
+                                        <a href="{% url 'tickets:assign_ticket' ticket.id %}" class="btn btn-primary btn-sm"><span class="fas fa-user-plus"></span> Assign</a>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>

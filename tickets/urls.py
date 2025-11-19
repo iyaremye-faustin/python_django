@@ -8,4 +8,7 @@ urlpatterns = [
     path('categories/create/', views.create_category, name='create_category'),
     path('', views.tickets, name='tickets_list'),
     path('create/', views.create_ticket, name='create_ticket'),
+    path('ticket_list/', views.tickets, name='ticket_list'),
+    path('assign/<int:ticket_id>/', views.assign_ticket, name='assign_ticket'),
+    path('ticket/<int:ticket_id>/', views.ticket_details, name='ticket_details'),
 ]
