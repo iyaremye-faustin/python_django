@@ -2,10 +2,19 @@
 
 {% block content %}
 <div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-tools">
+                    <a href="{% url 'tickets:create_category' %}" class="btn btn-primary btn-sm"><span class="fas fa-plus"></span> New Ticket Category</a>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">List of Users</h3>
+                <h3 class="card-title">List of Ticket Categories</h3>
 
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
@@ -23,31 +32,15 @@
                 <table class="table table-hover text-nowrap">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>User Name</th>
-                            <th>Email</th>
-                            <th>Telephone</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Department</th>
-                            <th>Role</th>
-                            <th>Date Joined</th>
-                            <th>Status</th>
+                            <th>Category Name</th>
+                            <th>Date Created</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for user in users %}
+                        {% for category in categories %}
                         <tr>
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.username }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.profile.phone }}</td>
-                            <td>{{ user.first_name }}</td>
-                            <td>{{ user.last_name }}</td>
-                            <td>{{ user.profile.department.name }}</td>
-                            <td>{{ user.profile.role.name }}</td>
-                            <td>{{ user.date_joined }}</td>
-                            <td>{{ user.status }}</td>
+                            <td>{{ category.name }}</td>
+                            <td>{{ category.created_at }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
