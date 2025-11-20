@@ -109,6 +109,10 @@ def assign_ticket(request, ticket_id):
             assigned_to=user,
             ticket=ticket,
         )
+        
+        if user == ticket.created_by:
+            messages.error(request, "You cannot assign the ticket to its creator.")
+            return redirect("tickets:assign_ticket", ticket.id)
 
         if created:
             messages.success(request, f"Ticket #{ticket.id} assigned to {user.username}.")
@@ -130,3 +134,33 @@ def ticket_details(request, ticket_id):
         "ticket": ticket,
         "assignments": assignments,
     })
+    
+def status(request):
+    if request.method == "POST":
+        status = request.POST.get("status", "").strip()
+        assignment_id = request.POST.get("assignment_id", "").strip()
+
+        errors = {}
+        if not status:
+            errors["status"] = "Status is required."
+        if not assignment_id:
+            errors["assignment_id"] = "Assignment ID is required."
+
+        if errors:
+            messages.error(request, "Invalid data provided.")
+            return redirect("index")
+
+        assignment = get_object_or_404(TicketAssignment, id=assignment_id)
+        ticket = assignment.ticket
+
+        if status not in dict(Ticket._meta.get_field('status').choices):
+            messages.error(request, "Invalid status value.")
+            return redirect("tickets:ticket_details", ticket.id)
+
+        ticket.status = status
+        ticket.save()
+
+        messages.success(request, f"Ticket #{ticket.id} status updated to {status}.")
+        return redirect("tickets:ticket_details", ticket.id)
+    print('Reached status view without POST')
+    return redirect("index")
