@@ -10,4 +10,5 @@ urlpatterns = [
     path('departments/create', views.create_department, name='new_department'),
     path('roles/', views.roles, name='role_list'),
     path('roles/create', views.create_role, name='new_role'),
+    path('users/edit/<int:user_id>/', views.editUser, name='edit_user'),
 ]
