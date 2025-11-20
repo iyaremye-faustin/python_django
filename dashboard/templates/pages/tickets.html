@@ -5,16 +5,6 @@
                 <i class="ion ion-clipboard mr-1"></i>
                 My Tickets
             </h3>
-
-            <div class="card-tools">
-                <ul class="pagination pagination-sm">
-                    <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
-                </ul>
-            </div>
         </div>
         <div class="card-footer clearfix">
             <a href="{% url 'tickets:create_ticket' %}" class="btn btn-info float-right"><i class="fas fa-plus"></i> Add Ticket</a>
@@ -28,16 +18,17 @@
                         <i class="fas fa-ellipsis-v"></i>
                     </span>
                     <div class="icheck-primary d-inline ml-2">
-                        <input type="checkbox" value="" name="ticket{{ ticket.id }}" id="todoCheck{{ ticket.id }}">
-                        <label for="todoCheck{{ ticket.id }}"></label>
+                        {% if ticket.status != 'open' %}
+                            <input type="checkbox" value="" name="ticket{{ ticket.id }}" id="todoCheck{{ ticket.id }}" checked>
+                            <label for="todoCheck{{ ticket.id }}"></label>
+                        {% else %}
+                            <input type="checkbox" value="" name="ticket{{ ticket.id }}" id="todoCheck{{ ticket.id }}">
+                            <label for="todoCheck{{ ticket.id }}"></label>
+                        {% endif %}
                     </div>
                     <span class="badge badge-info">{{ ticket.status }}</span>
-                    <span class="text">{{ ticket.title }}</span>
+                    <a href="{% url 'tickets:ticket_details' ticket.id %}"><span class="text">{{ ticket.title }}</span></a>
                     <small class="badge badge-secondary"><i class="far fa-clock"></i> {{ ticket.created_at }} </small>
-                    <div class="tools">
-                        <i class="fas fa-edit"></i>
-                        <i class="fas fa-trash-o"></i>
-                    </div>
                 </li>
                 {% endfor %}
             </ul>
@@ -62,16 +53,17 @@
                         <i class="fas fa-ellipsis-v"></i>
                     </span>
                     <div class="icheck-primary d-inline ml-2">
-                        <input type="checkbox" value="" name="ticket{{ ticket.id }}" id="todoCheck{{ ticket.id }}">
-                        <label for="todoCheck{{ ticket.id }}"></label>
+                        {% if ticket.status != 'open' %}
+                            <input type="checkbox" value="" name="ticket{{ ticket.id }}" id="todoCheck{{ ticket.id }}" checked>
+                            <label for="todoCheck{{ ticket.id }}"></label>
+                        {% else %}
+                            <input type="checkbox" value="" name="ticket{{ ticket.id }}" id="todoCheck{{ ticket.id }}">
+                            <label for="todoCheck{{ ticket.id }}"></label>
+                        {% endif %}
                     </div>
                     <span class="badge badge-info">{{ ticket.status }}</span>
-                    <span class="text">{{ ticket.title }}</span>
+                    <a href="{% url 'tickets:ticket_details' ticket.id %}"><span class="text">{{ ticket.title }}</span></a>
                     <small class="badge badge-secondary"><i class="far fa-clock"></i> {{ ticket.created_at }} </small>
-                    <div class="tools">
-                        <i class="fas fa-edit"></i>
-                        <i class="fas fa-trash-o"></i>
-                    </div>
                 </li>
                 {% endfor %}
             </ul>

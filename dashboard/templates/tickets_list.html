@@ -34,6 +34,7 @@
                         <tr>
                             <th>Ticket Title</th>
                             <th>Department</th>
+                            <th>Raised By</th>
                             <th>Status</th>
                             <th>Date Created</th>
                             <th>Actions</th>
@@ -44,6 +45,7 @@
                         <tr>
                             <td>{{ ticket.title }}</td>
                             <td>{{ ticket.department.name }}</td>
+                            <td>{{ ticket.created_by.first_name }} {{ ticket.created_by.last_name }}</td>
                             <td>{{ ticket.status }}</td>
                             <td>{{ ticket.created_at }}</td>
                             <td>
@@ -52,6 +54,7 @@
                                         <a href="{% url 'tickets:assign_ticket' ticket.id %}" class="btn btn-primary btn-sm"><span class="fas fa-user-plus"></span> Assign</a>
                                     {% endif %}
                                 {% endif %}
+                                <a href="{% url 'tickets:ticket_details' ticket.id %}" class="btn btn-info btn-sm"><span class="fas fa-eye"></span> View</a>
                             </td>
                         </tr>
                         {% endfor %}

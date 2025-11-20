@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Ticket Details{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="">{{ ticket.title }}</h3>
+
+                    <p class="card-text">
+                        {{ ticket.description }}
+                    </p>
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <form method="post" action="{% url 'tickets:status' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input type="hidden" name="assignment_id" value="{{ ticket.assignments.first.id }}">
+                                    <input type="hidden" name="status" value="closed">
+                                </div>
+                                {% if ticket.created_by == request.user and ticket.status == 'in_progress' %}
+                                    <button type="submit" class="btn btn-success">Mark As Completed</button>
+                                {% endif %}
+                            </form>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <form method="post">
+                                <div class="form-group">
+                                    <input type="hidden" name="ticket_id" value="{{ ticket.id }}">
+                                </div>
+                                {% if ticket.created_by.id == request.user.id and ticket.status == 'open' %}
+                                    <button type="submit" class="btn btn-danger">Cancel</button>
+                                {% endif %}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            {% for assignment in assignments %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title m-0">Assigned To </h5>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="card-title">
+                            {{ assignment.assigned_to.first_name }} {{ assignment.assigned_to.last_name }}
+                            <span class="badge badge-secondary">{{ ticket.status }}</span>
+                        </h6>
+                    </div>
+                    <div class="">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <form method="post" action="{% url 'tickets:status' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <input type="hidden" name="status" value="in_progress">
+                                        <input type="hidden" name="assignment_id" value="{{ assignment.id }}">
+                                    </div>
+                                    {% if assignment.assigned_to.id == request.user.id and ticket.status == 'open' %}
+                                        <button type="submit" class="btn btn-primary">Start</button>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div></div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
